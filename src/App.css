@@ -50,13 +50,19 @@
 }
 
 .new-customer-btn{
-  white-space: nowrap;
-  background-color:rgb(116, 19, 186);
-  color: white;
-  padding: 4%;
-  border-radius: 5%;
   font-size: 11px;
+  font-weight: bold;
+  color: white;
+  background-color:rgb(116, 19, 186);
   cursor: pointer;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  transition: 0.3s ease-in-out;
+}
+
+.new-customer-btn:hover{
+  background-color:rgb(96, 9, 166);
 }
 
 .table-head-container{
@@ -99,4 +105,57 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.header-container h3 {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.formChar {
+  font-size: 11px;
+  font-weight: bold;
+  color: rgb(63, 68, 68);
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.formChar input {
+  margin-left: 5px;
+  border-radius: 4px;
+  background-color: rgb(221, 228, 228);
+  border-color: rgb(212, 204, 204);
+  border-style: groove;
+}
+
+.form-box {
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.formChar-submit {
+  font-size: 11px;
+  font-weight: bold;
+  color: white;
+  background-color:rgb(116, 19, 186);
+  cursor: pointer;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  transition: 0.3s ease-in-out;
+}
+
+.formChar-submit:hover {
+  background-color:rgb(96, 9, 166);
+}
+
+.formControls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
 }
