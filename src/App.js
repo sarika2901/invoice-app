@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink,
+  Routes,
+} from "react-router-dom";
 import "./App.css";
 import NewCustomerB from "./NewCustomerB";
 import TableRow from "./TableRow";
@@ -72,10 +77,15 @@ const App = () => {
     <Router>
       <div className="app-container">
         <div className="column column-left">
-          <div className="icon-text-container">
+          <NavLink
+            to="/customers"
+            className="icon-text-container"
+            activeClassName="active"
+          >
             <i className="fa-solid fa-user icon-left"></i>
             Customers
-          </div>
+          </NavLink>
+
           <div className="icon-text-container">
             <i className="fa fa-star icon-left"></i>
             Items
@@ -91,7 +101,11 @@ const App = () => {
               path="/new-customer"
               element={<NewCustomerPage onAdd={addCustomer} />}
             />
-            <Route path="/" element={<CustomerList customers={customers} />} />
+            <Route
+              path="/customers"
+              element={<CustomerList customers={customers} />}
+            />
+            {/* <Route path="/" element={<Navigate to="/customers" />} /> */}
           </Routes>
         </div>
       </div>
