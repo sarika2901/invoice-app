@@ -10,9 +10,8 @@
 }
 
 .column-left {
-  margin-top: 2vh;
-  padding-left: 2%;
-  padding-top: 1%;
+  padding-left: 1.5%;
+  padding-top: 0.4%;
   flex: 0.3;
   background-color: #f2f2f2; 
 }
@@ -34,7 +33,7 @@
 
 .column-right {
   padding: 4px;
-  margin-top: 2vh;
+  /* margin-top: 2vh; */
   padding-left: 2%;
   padding-right: 2%;
   flex: 0.7;
@@ -52,7 +51,7 @@
   align-items: center;
 }
 
-.new-customer-btn, .add-item-btn{
+.new-customer-btn, .add-item-btn, .add-invoice-btn{
   font-size: 11px;
   font-weight: bold;
   color: white;
@@ -64,7 +63,7 @@
   transition: 0.3s ease-in-out;
 }
 
-.new-customer-btn:hover, .add-item-btn:hover{
+.new-customer-btn:hover, .add-item-btn:hover, .add-invoice-btn:hover{
   background-color:rgb(96, 9, 166);
 }
 
@@ -190,4 +189,14 @@
   margin-top: 5px ;
 }
 
- 
+.banner-text{
+  margin-top: 0%;
+  text-align: center;
+}
+
+.banner-text-left {
+  display: flex;
+  margin-left: 20px;
+  margin-top: 1%;
+  text-align: left;
+}

@@ -8,6 +8,7 @@ import {
 import "./App.css";
 import NewCustomerB from "./NewCustomerB";
 import AddItemB from "./AddItemB";
+import AddInvoiceButton from "./AddInvoiceButton";
 import TableRow from "./TableRow";
 import TableRowItems from "./TableRowItems";
 import NewCustomerPage from "./NewCustomerPage";
@@ -61,6 +62,78 @@ const ItemsList = (props) => (
   </>
 );
 
+let invoices = [
+  {
+    Date: "12/17/2019",
+    Customer: "Sarika",
+    InvNumber: "INV-00010",
+    PaidStatus: "Issued",
+    Amount: 3000,
+    AmountDue: 1000,
+  },
+  {
+    Date: "12/19/2019",
+    Customer: "Harry",
+    InvNumber: "INV-00011",
+    PaidStatus: "Paid",
+    Amount: 5000,
+    AmountDue: 0,
+  },
+  {
+    Date: "01/10/2020",
+    Customer: "Ron",
+    InvNumber: "INV-00012",
+    PaidStatus: "Pending",
+    Amount: 2500,
+    AmountDue: 2500,
+  },
+  {
+    Date: "01/15/2020",
+    Customer: "Hermione",
+    InvNumber: "INV-00013",
+    PaidStatus: "Issued",
+    Amount: 4000,
+    AmountDue: 1500,
+  },
+  {
+    Date: "02/05/2020",
+    Customer: "Draco",
+    InvNumber: "INV-00014",
+    PaidStatus: "Paid",
+    Amount: 6000,
+    AmountDue: 0,
+  },
+];
+
+const InvoicesList = () => {
+  return (
+    <div className="invoices-list-container">
+      <div className="header-container">
+        <h3>Invoices</h3>
+        <AddInvoiceButton />
+      </div>
+      <div className="table-head-container">
+        <div className="table-head">DATE</div>
+        <div className="table-head">CUSTOMERS</div>
+        <div className="table-head">NUMBER</div>
+        <div className="table-head">PAID STATUS</div>
+        <div className="table-head">AMOUNT</div>
+        <div className="table-head">AMOUNT DUE</div>
+      </div>
+      {invoices.map((invoice, index) => (
+        <div key={index} className="table-items-container">
+          <div className="table-item">{invoice.Date}</div>
+          <div className="table-item">{invoice.Customer}</div>
+          <div className="table-item">{invoice.InvNumber}</div>
+          <div className="table-item">{invoice.PaidStatus}</div>
+          <div className="table-item">${invoice.Amount.toFixed(2)}</div>
+          <div className="table-item">${invoice.AmountDue.toFixed(2)}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const App = () => {
   const [customers, setCustomers] = useState([]);
   const addCustomer = (newCustomer) => {
@@ -76,6 +149,15 @@ const App = () => {
     <Router>
       <div className="app-container">
         <div className="column column-left">
+          <h3 className="banner-text-left">Menu</h3>
+          <NavLink
+            to="/"
+            className="icon-text-container"
+            activeClassName="active"
+          >
+            <i className="fa fa-home icon-left"></i>
+            Home
+          </NavLink>
           <NavLink
             to="/customers"
             className="icon-text-container"
@@ -84,21 +166,25 @@ const App = () => {
             <i className="fa-solid fa-user icon-left"></i>
             Customers
           </NavLink>
-
           <NavLink
             to="/items"
             className="icon-text-container"
             activeClassName="active"
           >
-            <i className="fa-solid fa-user icon-left"></i>
+            <i className="fa fa-star icon-left"></i>
             Items
           </NavLink>
-          <div className="icon-text-container">
-            <i className="fa fa-sticky-note icon-left"></i>
+          <NavLink
+            to="/invoices"
+            className="icon-text-container"
+            activeClassName="active"
+          >
+            <i className="fa fa-id-card icon-left"></i>
             Invoices
-          </div>
+          </NavLink>
         </div>
         <div className="column column-right">
+          <h2 className="banner-text">Generate Invoices</h2>
           <Routes>
             <Route
               path="/new-customer"
@@ -110,6 +196,7 @@ const App = () => {
             />
             <Route path="/new-item" element={<NewItemPage onAdd={addItem} />} />
             <Route path="/items" element={<ItemsList items={items} />} />
+            <Route path="/invoices" element={<InvoicesList />} />
           </Routes>
         </div>
       </div>
