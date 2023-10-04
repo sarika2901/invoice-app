@@ -21,13 +21,15 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  text-decoration: wavy;
+  background-color: #f2f2f2;
+  text-decoration: none;
+  border-radius: 5px;
 }
 
 .icon-left{
   margin-left: 20px;
   margin-right: 30px;
-  color: darkgrey;
+  color: rgb(123, 119, 119);
 }
 
 .column-right {
@@ -50,7 +52,7 @@
   align-items: center;
 }
 
-.new-customer-btn{
+.new-customer-btn, .add-item-btn{
   font-size: 11px;
   font-weight: bold;
   color: white;
@@ -62,9 +64,10 @@
   transition: 0.3s ease-in-out;
 }
 
-.new-customer-btn:hover{
+.new-customer-btn:hover, .add-item-btn:hover{
   background-color:rgb(96, 9, 166);
 }
+
 
 .table-head-container{
   display: flex;
@@ -85,6 +88,7 @@
   display: flex;
   justify-content: space-between;
   text-align: left;
+  flex-wrap: wrap;
 }
 .table-item{
   flex: 1;
@@ -100,6 +104,7 @@
 
 .table-head, .table-item {
   min-width: 100px; 
+  flex-shrink: 0;
 }
 
 .table-head, .table-item {
@@ -107,6 +112,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 
 .header-container h3 {
   display: flex;
@@ -118,16 +124,17 @@
   font-weight: bold;
   color: rgb(63, 68, 68);
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   margin-bottom: 10px;
 }
 
 .formChar input {
-  margin-left: 5px;
   border-radius: 4px;
   background-color: rgb(221, 228, 228);
   border-color: rgb(212, 204, 204);
   border-style: groove;
+  margin-top: 5px ;
 }
 
 .form-box {
@@ -148,6 +155,8 @@
   padding: 5px 10px;
   border-radius: 3px;
   transition: 0.3s ease-in-out;
+  width: 100px; 
+  height: 30px;
 }
 
 .formChar-submit:hover {
@@ -161,5 +170,24 @@
   gap: 12px;
 }
 .icon-text-container.active {
-  text-decoration: underline;
+  text-decoration: none;
+  color: purple;
+  font-weight: bold;
+  background-color: #c78bd0;
 }
+
+.icon-text-container.active .icon-left {
+  color: purple;
+}
+
+.large-input {
+  height: 60px; 
+  width: 100%;
+  border-radius: 4px;
+  background-color: rgb(221, 228, 228);
+  border-color: rgb(212, 204, 204);
+  border-style: groove;
+  margin-top: 5px ;
+}
+
+ 

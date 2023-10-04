@@ -7,41 +7,11 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import NewCustomerB from "./NewCustomerB";
+import AddItemB from "./AddItemB";
 import TableRow from "./TableRow";
+import TableRowItems from "./TableRowItems";
 import NewCustomerPage from "./NewCustomerPage";
-
-// let customers = [
-//   {
-//     name: "Sarika",
-//     phone: "911",
-//     email: "bestperson@awesome.com",
-//     createdOn: "31 Feb 2051",
-//   },
-//   {
-//     name: "Kajal",
-//     phone: "911",
-//     email: "bestperson@awesome.com",
-//     createdOn: "31 Feb 2051",
-//   },
-//   {
-//     name: "Neeraj",
-//     phone: "911",
-//     email: "bestperson@awesome.com",
-//     createdOn: "31 Feb 2051",
-//   },
-//   {
-//     name: "Rajni",
-//     phone: "911",
-//     email: "bestperson@awesome.com",
-//     createdOn: "31 Feb 2051",
-//   },
-//   {
-//     name: "Sid",
-//     phone: "911",
-//     email: "bestperson@awesome.com",
-//     createdOn: "31 Feb 2051",
-//   },
-// ];
+import NewItemPage from "./NewItemPage";
 
 const CustomerList = (props) => (
   <>
@@ -67,10 +37,39 @@ const CustomerList = (props) => (
   </>
 );
 
+const ItemsList = (props) => (
+  <>
+    <div className="header-container">
+      <h3>Items</h3>
+      <AddItemB />
+    </div>
+    <div className="table-head-container">
+      <div className="table-head">NAME</div>
+      <div className="table-head">DESCRIPTION</div>
+      <div className="table-head">PRICE</div>
+      <div className="table-head">ADDED ON</div>
+    </div>
+    {props.items.map((x) => (
+      <TableRowItems
+        key={x.name}
+        name={x.name}
+        price={x.price}
+        description={x.description}
+        addedOn={x.addedOn}
+      />
+    ))}
+  </>
+);
+
 const App = () => {
   const [customers, setCustomers] = useState([]);
   const addCustomer = (newCustomer) => {
     setCustomers((prevCustomers) => [...prevCustomers, newCustomer]);
+  };
+
+  const [items, setItems] = useState([]);
+  const addItem = (newItem) => {
+    setItems((prevItems) => [...prevItems, newItem]);
   };
 
   return (
@@ -86,10 +85,14 @@ const App = () => {
             Customers
           </NavLink>
 
-          <div className="icon-text-container">
-            <i className="fa fa-star icon-left"></i>
+          <NavLink
+            to="/items"
+            className="icon-text-container"
+            activeClassName="active"
+          >
+            <i className="fa-solid fa-user icon-left"></i>
             Items
-          </div>
+          </NavLink>
           <div className="icon-text-container">
             <i className="fa fa-sticky-note icon-left"></i>
             Invoices
@@ -105,7 +108,8 @@ const App = () => {
               path="/customers"
               element={<CustomerList customers={customers} />}
             />
-            {/* <Route path="/" element={<Navigate to="/customers" />} /> */}
+            <Route path="/new-item" element={<NewItemPage onAdd={addItem} />} />
+            <Route path="/items" element={<ItemsList items={items} />} />
           </Routes>
         </div>
       </div>

@@ -10,4 +10,5 @@ const TableRow = ({ name, phone, email, createdOn }) => {
     </div>
   );
 };
+
 export default TableRow;
