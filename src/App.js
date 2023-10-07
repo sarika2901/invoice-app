@@ -6,13 +6,14 @@ import {
   Routes,
 } from "react-router-dom";
 import "./App.css";
-import NewCustomerB from "./NewCustomerB";
-import AddItemB from "./AddItemB";
+import NewCustomerB from "./customers/NewCustomerB";
+import AddItemB from "./Items/AddItemB";
 import AddInvoiceButton from "./AddInvoiceButton";
-import TableRow from "./TableRow";
-import TableRowItems from "./TableRowItems";
-import NewCustomerPage from "./NewCustomerPage";
-import NewItemPage from "./NewItemPage";
+import TableRow from "./customers/TableRow";
+import TableRowItems from "./Items/TableRowItems";
+import NewCustomerPage from "./customers/NewCustomerPage";
+import NewInvoicePage from "./NewInvoicePage";
+import NewItemPage from "./Items/NewItemPage";
 
 const CustomerList = (props) => (
   <>
@@ -196,6 +197,11 @@ const App = () => {
             />
             <Route path="/new-item" element={<NewItemPage onAdd={addItem} />} />
             <Route path="/items" element={<ItemsList items={items} />} />
+            <Route
+              path="/new-invoice"
+              element={<NewInvoicePage customers={customers} items={items} />}
+            />
+
             <Route path="/invoices" element={<InvoicesList />} />
           </Routes>
         </div>

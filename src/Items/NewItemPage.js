@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "./App.css";
+import "../App.css";
 
-const NewCustomerPage = ({ onAdd }) => {
+const NewItemPage = ({ onAdd }) => {
   const [formData, setFormData] = useState({
     name: "",
-    phone: "",
-    email: "",
+    price: "",
+    description: "",
   });
 
   const handleChange = (x) => {
@@ -18,20 +18,20 @@ const NewCustomerPage = ({ onAdd }) => {
 
   const handleSubmit = (x) => {
     x.preventDefault();
-    const newCustomer = {
+    const newItem = {
       name: formData.name,
-      phone: formData.phone,
-      email: formData.email,
-      createdOn: new Date().toLocaleDateString(),
+      price: formData.price,
+      description: formData.description,
+      addedOn: new Date().toLocaleDateString(),
     };
-    onAdd(newCustomer);
-    setFormData({ name: "", phone: "", email: "" });
+    onAdd(newItem);
+    setFormData({ name: "", price: "", description: "" });
   };
 
   return (
     <div className="container-new-customer">
       <div className="header-container">
-        <h3>New Customer</h3>
+        <h3>New Item</h3>
       </div>
       <div className="form-box">
         <form onSubmit={handleSubmit}>
@@ -47,27 +47,27 @@ const NewCustomerPage = ({ onAdd }) => {
               />
             </label>
             <label className="formChar">
-              Phone
+              Price
               <input
                 type="number"
-                name="phone"
-                value={formData.phone}
+                name="price"
+                value={formData.price}
                 onChange={handleChange}
                 required
               />
             </label>
             <label className="formChar">
-              Email
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
+              Description
+              <textarea
+                name="description"
+                value={formData.description}
                 onChange={handleChange}
                 required
-              />
+                className="large-input"
+              ></textarea>
             </label>
             <button className="formChar-submit" type="submit">
-              Submit
+              Add Item
             </button>
           </div>
         </form>
@@ -76,4 +76,4 @@ const NewCustomerPage = ({ onAdd }) => {
   );
 };
 
-export default NewCustomerPage;
+export default NewItemPage;
