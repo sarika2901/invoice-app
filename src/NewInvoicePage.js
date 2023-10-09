@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
 import AddInvoiceButton from "./AddInvoiceButton";
-import SearchCustomerBar from "./customers/SearchCustomerBar";
-import SearchItemBar from "./Items/SearchItemBar";
+import SearchCustomerBar from "./SearchCustomerBar";
+import SearchItemBar from "./SearchItemBar";
 
 const NewInvoicePage = ({ customers, items }) => {
   const [issuedDate, setIssuedDate] = useState("");
