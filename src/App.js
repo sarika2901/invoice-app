@@ -14,6 +14,7 @@ import NewInvoicePage from "./NewInvoicePage";
 import NewItemPage from "./Items/NewItemPage";
 import Table from "./Table";
 import { TableProvider, useTable } from "./TableContext";
+import HomePage from "./Home/HomePage";
 
 const CustomerList = ({ customers }) => {
   const { setHeaders, setRows } = useTable();
@@ -69,30 +70,6 @@ const ItemsList = ({ items }) => {
     </>
   );
 };
-
-// const ItemsList = (props) => (
-//   <>
-//     <div className="header-container">
-//       <h3>Items</h3>
-//       <AddItemB />
-//     </div>
-//     <div className="table-head-container">
-//       <div className="table-head">NAME</div>
-//       <div className="table-head">DESCRIPTION</div>
-//       <div className="table-head">PRICE</div>
-//       <div className="table-head">ADDED ON</div>
-//     </div>
-//     {props.items.map((x) => (
-//       <TableRowItems
-//         key={x.name}
-//         name={x.name}
-//         price={x.price}
-//         description={x.description}
-//         addedOn={x.addedOn}
-//       />
-//     ))}
-//   </>
-// );
 
 let invoices = [
   {
@@ -219,6 +196,7 @@ const App = () => {
           <div className="column column-right">
             <h2 className="banner-text">Generate Invoices</h2>
             <Routes>
+              <Route path="/" element={<HomePage />} exact />
               <Route
                 path="/new-customer"
                 element={<NewCustomerPage onAdd={addCustomer} />}
