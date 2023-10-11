@@ -46,29 +46,55 @@ const CustomerList = ({ customers }) => {
   );
 };
 
-const ItemsList = (props) => (
-  <>
-    <div className="header-container">
-      <h3>Items</h3>
-      <AddItemB />
-    </div>
-    <div className="table-head-container">
-      <div className="table-head">NAME</div>
-      <div className="table-head">DESCRIPTION</div>
-      <div className="table-head">PRICE</div>
-      <div className="table-head">ADDED ON</div>
-    </div>
-    {props.items.map((x) => (
-      <TableRowItems
-        key={x.name}
-        name={x.name}
-        price={x.price}
-        description={x.description}
-        addedOn={x.addedOn}
-      />
-    ))}
-  </>
-);
+const ItemsList = ({ items }) => {
+  const { setHeaders, setRows } = useTable();
+  useEffect(() => {
+    setHeaders(["NAME", "DESCRIPTION", "PRICE", "ADDED ON"]);
+    setRows(
+      items.map((x) => (
+        <div className="table-items-container">
+          <div className="table-item">{x.name}</div>
+          <div className="table-item">{x.description}</div>
+          <div className="table-item">Rs. {x.price}</div>
+          <div className="table-item">{x.addedOn}</div>
+        </div>
+      ))
+    );
+  }, [items, setHeaders, setRows]);
+  return (
+    <>
+      <div className="header-container">
+        <h3>Items</h3>
+        <AddItemB />
+      </div>
+      <Table />
+    </>
+  );
+};
+
+// const ItemsList = (props) => (
+//   <>
+//     <div className="header-container">
+//       <h3>Items</h3>
+//       <AddItemB />
+//     </div>
+//     <div className="table-head-container">
+//       <div className="table-head">NAME</div>
+//       <div className="table-head">DESCRIPTION</div>
+//       <div className="table-head">PRICE</div>
+//       <div className="table-head">ADDED ON</div>
+//     </div>
+//     {props.items.map((x) => (
+//       <TableRowItems
+//         key={x.name}
+//         name={x.name}
+//         price={x.price}
+//         description={x.description}
+//         addedOn={x.addedOn}
+//       />
+//     ))}
+//   </>
+// );
 
 let invoices = [
   {
