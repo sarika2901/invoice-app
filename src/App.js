@@ -9,8 +9,6 @@ import "./App.css";
 import NewCustomerB from "./customers/NewCustomerB";
 import AddItemB from "./Items/AddItemB";
 import AddInvoiceButton from "./AddInvoiceButton";
-
-import TableRowItems from "./Items/TableRowItems";
 import NewCustomerPage from "./customers/NewCustomerPage";
 import NewInvoicePage from "./NewInvoicePage";
 import NewItemPage from "./Items/NewItemPage";
