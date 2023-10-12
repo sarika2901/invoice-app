@@ -20,40 +20,45 @@ const SearchItemBar = ({ items, onDelete }) => {
 
   return (
     <div className="qty-price">
-      <select
-        className="item-dropdown"
-        value={selectedItem.name || ""}
-        onChange={handleItemChange}
-      >
-        <option value="" disabled>
-          Select Items
-        </option>
-        {items.map((item) => (
-          <option key={item.name} value={item.name}>
-            {item.name}
+      <div className="drop">
+        <select
+          className="item-dropdown"
+          value={selectedItem.name || ""}
+          onChange={handleItemChange}
+        >
+          <option value="" disabled>
+            Select Items
           </option>
-        ))}
-      </select>
-      <input
-        type="number"
-        className="qtyChange"
-        value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
-        placeholder="Quantity"
-      />
+          {items.map((item) => (
+            <option key={item.name} value={item.name}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="qty-input">
+        <span className="qty">Qty.</span>
+        <input
+          type="number"
+          className="qtyChange"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          placeholder="Quantity"
+        />
+      </div>
       <div className="price">
         {" "}
         Price
-        <p>{selectedItem.price || ""}</p>
+        <p>Rs. {selectedItem.price || ""}</p>
       </div>
       <div className="price">
         {" "}
         Amount
-        <p> {amount} </p>
+        <p> Rs. {amount} </p>
       </div>
       <div className="price">
         <button
-          className="fa-solid fa-trash icon-left"
+          className="fa-solid fa-trash bin-icon"
           onClick={onDelete}
         ></button>
       </div>
