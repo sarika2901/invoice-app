@@ -8,9 +8,9 @@ import {
 import "./App.css";
 import NewCustomerB from "./customers/NewCustomerB";
 import AddItemB from "./Items/AddItemB";
-import AddInvoiceButton from "./AddInvoiceButton";
+import AddInvoiceButton from "./Invoice/AddInvoiceButton";
 import NewCustomerPage from "./customers/NewCustomerPage";
-import NewInvoicePage from "./NewInvoicePage";
+import NewInvoicePage from "./Invoice/NewInvoicePage";
 import NewItemPage from "./Items/NewItemPage";
 import Table from "./Table";
 import { TableProvider, useTable } from "./TableContext";
@@ -51,7 +51,7 @@ const ItemsList = ({ items }) => {
     setHeaders(["NAME", "DESCRIPTION", "PRICE", "ADDED ON"]);
     setRows(
       items.map((x) => (
-        <div className="table-items-container">
+        <div key={x.name} className="table-items-container">
           <div className="table-item">{x.name}</div>
           <div className="table-item">{x.description}</div>
           <div className="table-item">Rs. {x.price}</div>

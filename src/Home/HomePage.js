@@ -5,18 +5,44 @@ const HomePage = () => {
   const [catFact, setCatFact] = useState("");
   const [dadJoke, setDadJoke] = useState("");
   const [showCatFact, setShowCatFact] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("https://icanhazdadjoke.com/", {
-        headers: { Accept: "application/json" },
-      })
-      .then((response) => {
-        setDadJoke(response.data.joke);
-      })
-      .catch((error) => {
-        alert.error("Error fetching dad joke:", error);
-      });
+    const handleBeforeUnload = () => {
+      sessionStorage.removeItem("session");
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    const storedJoke = localStorage.getItem("dadJoke");
+    const session = sessionStorage.getItem("session");
+
+    setTimeout(() => {
+      if (!session) {
+        setIsLoading(true);
+        axios
+          .get("https://icanhazdadjoke.com/", {
+            headers: { Accept: "application/json" },
+          })
+          .then((response) => {
+            setDadJoke(response.data.joke);
+            localStorage.setItem("dadJoke", response.data.joke);
+            sessionStorage.setItem("session", "true");
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching dad joke:", error);
+            setIsLoading(false);
+          });
+      } else {
+        setDadJoke(storedJoke);
+        setIsLoading(false);
+      }
+    });
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, []);
 
   const fetchCatFact = () => {
@@ -33,18 +59,28 @@ const HomePage = () => {
 
   return (
     <div>
-      <div className="cat-facts">
-        <h3>Cat Fact</h3>
-        {showCatFact ? (
-          <p>{catFact}</p>
-        ) : (
-          <button className="cat-facts-btn" onClick={fetchCatFact}>
-            Show Cat Fact
-          </button>
-        )}
-      </div>
-      <h3>Dad Joke</h3>
-      <p>{dadJoke}</p>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <h3>Cat Fact</h3>
+          {showCatFact ? (
+            <div>
+              <p>{catFact}</p>
+              <button className="cat-facts-btn" onClick={fetchCatFact}>
+                New Cat Fact
+              </button>
+            </div>
+          ) : (
+            <button className="cat-facts-btn" onClick={fetchCatFact}>
+              Show Cat Fact
+            </button>
+          )}
+
+          <h3>Dad Joke</h3>
+          <p>{dadJoke}</p>
+        </>
+      )}
     </div>
   );
 };

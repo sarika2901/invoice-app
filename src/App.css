@@ -28,6 +28,7 @@
   margin-left: 20px;
   margin-right: 30px;
   color: rgb(123, 119, 119);
+  border: none;
 }
 
 .column-right {
@@ -243,26 +244,26 @@
   height: 50%;
 }
 
-.qty-price{
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
+.Items-header{
+  flex: 1;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(20, 22, 22);
 }
 
-.qty-input{
-  width: 27%;
-  margin-left: 6.4px;
-  margin-bottom: 3%;
-  height: 100%;
-  color: #818487;
-  padding-left: 2.5%;
-  font-size: 14px;
-  border-radius: 4px;
-  border: 1px solid #dccfcf;
-  background-color: #ffffff;
-  cursor: pointer;
-  transition: border-color cubic-bezier(0.785, 0.135, 0.15, 0.86) ease;
+.price{
+  flex: 1;
+  padding: 10px;
+  font-size: 10px;
+  font-weight: bold;
+  color: rgb(92, 99, 99);
+}
+
+.qty-price{
+display: flex;
+flex-direction: row;
+align-items: center;
 }
 
 .left-new-invoice-page-header, .right-new-invoice-page-header-issuedAt, .right-new-invoice-page-header-invoiceNumber, .right-new-invoice-page-header-referenceID{
@@ -295,6 +296,24 @@ margin-bottom: 5px;
   border-radius: 4px;
   border: 1px solid #dccfcf;
   appearance: none; 
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: border-color cubic-bezier(0.785, 0.135, 0.15, 0.86) ease;
+}
+
+.item-dropdown, .qtyChange{
+  width: fit-content;
+  margin-left: 5px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  color: #818487;
+  padding: 1%;
+  scroll-behavior: smooth;
+  scroll-margin: 10px;
+  padding-left: 1.5%;
+  font-size: 12px;
+  border-radius: 4px;
+  border: 1px solid #dccfcf;
   background-color: #ffffff;
   cursor: pointer;
   transition: border-color cubic-bezier(0.785, 0.135, 0.15, 0.86) ease;

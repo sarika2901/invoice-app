@@ -1,13 +1,23 @@
-import React, { useState } from "react";
-import "./App.css";
-import AddInvoiceButton from "./AddInvoiceButton";
+import React, { useState, useEffect } from "react";
+import "../App.css";
 import SearchCustomerBar from "./SearchCustomerBar";
 import SearchItemBar from "./SearchItemBar";
 
 const NewInvoicePage = ({ customers, items }) => {
   const [issuedDate, setIssuedDate] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [LineItems, setLineItems] = useState([{ name: "", qty: 1, price: 0 }]);
+
+  const addNewItem = () => {
+    setLineItems((prevItems) => [...prevItems, { name: "", qty: 1, price: 0 }]);
+  };
+
+  const handleDelete = (indexToRemove) => {
+    setLineItems((prevItems) =>
+      prevItems.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
   return (
     <div className="invoice-page-container">
       <div className="header-container-invoice">
@@ -62,28 +72,16 @@ const NewInvoicePage = ({ customers, items }) => {
           </div>
         </div>
       </div>
-      <div className="left-right-box">
-        <div className="left-new-invoice-page2">
-          <div className="items">
-            <div className="left-new-invoice-page-header">Items</div>
-            <SearchItemBar items={items} />
+      <div className="Items-header">Items</div>
+      <div className="item-list-container">
+        {LineItems.map((item, index) => (
+          <div key={index} className="item-row">
+            <SearchItemBar items={items} onDelete={() => handleDelete(index)} />
           </div>
-          <div className="qty">
-            <div className="left-new-invoice-page-header">Qty.</div>
-            <input
-              type="number"
-              className="qty-input"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-              placeholder="Enter"
-              min="1"
-            />
-          </div>
-          <div className="Amount">
-            <div className="left-new-invoice-page-header">Amount</div>
-          </div>
-        </div>
-        <div className="right-new-invoice-page"></div>
+        ))}
+        <button className="formChar-submit" onClick={addNewItem}>
+          Add an Item
+        </button>
       </div>
     </div>
   );
