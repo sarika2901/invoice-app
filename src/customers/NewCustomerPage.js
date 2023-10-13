@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
+import Modal from "../modal/modal.js";
+import "../modal/modal.css";
 
 const NewCustomerPage = ({ onAdd }) => {
   const [formData, setFormData] = useState({
@@ -27,6 +29,8 @@ const NewCustomerPage = ({ onAdd }) => {
     onAdd(newCustomer);
     setFormData({ name: "", phone: "", email: "" });
   };
+
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <div className="container-new-customer">
@@ -66,11 +70,22 @@ const NewCustomerPage = ({ onAdd }) => {
                 required
               />
             </label>
-            <button className="formChar-submit" type="submit">
+            <button
+              className="formChar-submit"
+              type="submit"
+              onClick={() => {
+                if (
+                  (formData.name !== "",
+                  formData.email !== "" && formData.phone !== "")
+                )
+                  setOpenModal(true);
+              }}
+            >
               Submit
             </button>
           </div>
         </form>
+        {openModal && <Modal closeModal={setOpenModal} />}
       </div>
     </div>
   );

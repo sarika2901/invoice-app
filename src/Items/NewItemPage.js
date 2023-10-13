@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
+import Modal from "../modal/modal.js";
+import "../modal/modal.css";
 
 const NewItemPage = ({ onAdd }) => {
   const [formData, setFormData] = useState({
@@ -27,6 +29,8 @@ const NewItemPage = ({ onAdd }) => {
     onAdd(newItem);
     setFormData({ name: "", price: "", description: "" });
   };
+
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <div className="container-new-customer">
@@ -66,11 +70,22 @@ const NewItemPage = ({ onAdd }) => {
                 className="large-input"
               ></textarea>
             </label>
-            <button className="formChar-submit" type="submit">
+            <button
+              className="formChar-submit"
+              type="submit"
+              onClick={() => {
+                if (
+                  (formData.name !== "",
+                  formData.price !== "" && formData.description !== "")
+                )
+                  setOpenModal(true);
+              }}
+            >
               Add Item
             </button>
           </div>
         </form>
+        {openModal && <Modal closeModal={setOpenModal} />}
       </div>
     </div>
   );
