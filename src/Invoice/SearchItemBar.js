@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const SearchItemBar = ({ items, onDelete }) => {
+const SearchItemBar = ({ items, onDelete, index }) => {
   const [selectedItem, setSelectedItem] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [amount, setAmount] = useState(0);
@@ -9,6 +9,9 @@ const SearchItemBar = ({ items, onDelete }) => {
   useEffect(() => {
     if (selectedItem && selectedItem.price) {
       setAmount(selectedItem.price * quantity);
+    }
+    if (quantity === 0) {
+      onDelete();
     }
   }, [selectedItem, quantity]);
 
@@ -42,7 +45,14 @@ const SearchItemBar = ({ items, onDelete }) => {
           type="number"
           className="qtyChange"
           value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
+          onChange={(e) => {
+            const newQ = parseInt(e.target.value, 10);
+            if (newQ <= 0) {
+              onDelete(index);
+            } else {
+              setQuantity(newQ);
+            }
+          }}
           placeholder="Quantity"
         />
       </div>

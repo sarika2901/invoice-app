@@ -76,7 +76,11 @@ const NewInvoicePage = ({ customers, items }) => {
       <div className="item-list-container">
         {LineItems.map((item, index) => (
           <div key={index} className="item-row">
-            <SearchItemBar items={items} onDelete={() => handleDelete(index)} />
+            <SearchItemBar
+              items={items}
+              index={index}
+              onDelete={() => handleDelete(index)}
+            />
           </div>
         ))}
         <button className="formChar-submit" onClick={addNewItem}>

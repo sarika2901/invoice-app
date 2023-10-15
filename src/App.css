@@ -267,7 +267,7 @@
 .qty{
   flex: 1;
   padding: 10px;
-  
+  padding-top: 4px;  
   font-size: 10px;
   font-weight: bold;
   color: rgb(92, 99, 99);
