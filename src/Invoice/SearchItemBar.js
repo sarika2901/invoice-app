@@ -1,7 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const SearchItemBar = ({ items, onDelete, index }) => {
+const SearchItemBar = ({
+  items,
+  onDelete,
+  index,
+  currentLineItem,
+  onUpdate,
+}) => {
   const [selectedItem, setSelectedItem] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [amount, setAmount] = useState(0);
@@ -13,6 +19,12 @@ const SearchItemBar = ({ items, onDelete, index }) => {
     if (quantity === 0) {
       onDelete();
     }
+
+    onUpdate({
+      name: selectedItem.name,
+      qty: quantity,
+      price: selectedItem.price,
+    });
   }, [selectedItem, quantity]);
 
   const handleItemChange = (event) => {

@@ -421,3 +421,56 @@ margin-bottom: 5px;
   margin-top: 5px;
   margin-bottom: 10px;
 }
+
+.notes-summary-container {
+  margin: 15px;
+  margin-left: 0;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  background-color: #e0d5e1;
+  padding: 3%;
+}
+
+.notes {
+  flex: 0.5;
+  font-weight: 500;
+  color: #4c4f53;
+}
+
+.notes-text-area{
+  background-color: rgb(250, 253, 253);
+  border-color: rgb(212, 204, 204);
+  border-style: groove;
+  margin-top: 5px ;
+  border-radius: 5px;
+  color: #818487;
+}
+
+.summary {
+  display: flex;
+  flex: 0.5;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 5px;
+  flex-direction: column;
+}
+
+.summary-items{
+  display: flex;
+  gap: 10px;
+  flex: 9;
+  font-size: small;
+  color: #4c4f53;
+  font-weight: 500;
+}
+
+.amt-summ{
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  flex: 1;
+  font-weight: bold;
+  color: #4c4f53;
+  font-size: smaller;
+}

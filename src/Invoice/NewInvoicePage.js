@@ -6,6 +6,7 @@ import SearchItemBar from "./SearchItemBar";
 const NewInvoicePage = ({ customers, items }) => {
   const [issuedDate, setIssuedDate] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [totalAmount, setTotalAmount] = useState(0);
   const [LineItems, setLineItems] = useState([{ name: "", qty: 1, price: 0 }]);
 
   const addNewItem = () => {
@@ -17,6 +18,22 @@ const NewInvoicePage = ({ customers, items }) => {
       prevItems.filter((_, index) => index !== indexToRemove)
     );
   };
+
+  const handleItemUpdate = (index, updatedItem) => {
+    setLineItems((prevItems) => {
+      const newItems = [...prevItems];
+      newItems[index] = updatedItem;
+      return newItems;
+    });
+  };
+
+  useEffect(() => {
+    const newTotal = LineItems.reduce(
+      (sum, item) => sum + item.qty * item.price,
+      0
+    );
+    setTotalAmount(newTotal);
+  }, [LineItems]);
 
   return (
     <div className="invoice-page-container">
@@ -79,6 +96,7 @@ const NewInvoicePage = ({ customers, items }) => {
             <SearchItemBar
               items={items}
               index={index}
+              onUpdate={(updatedItem) => handleItemUpdate(index, updatedItem)}
               onDelete={() => handleDelete(index)}
             />
           </div>
@@ -86,6 +104,32 @@ const NewInvoicePage = ({ customers, items }) => {
         <button className="formChar-submit" onClick={addNewItem}>
           Add an Item
         </button>
+      </div>
+      <div className="notes-summary-container">
+        <div className="notes">
+          <div className="notes-header">Notes</div>
+          <div className="note-description">
+            <textarea
+              className="notes-text-area"
+              rows="4"
+              cols="27"
+              placeholder="Enter your notes here"
+            ></textarea>
+          </div>
+        </div>
+        <div className="summary">
+          {LineItems.map((item, index) => (
+            <div className="summary-items" key={index}>
+              <span className="item-name">{item.name}</span>
+              <span className="qty-name">x{item.qty}</span>
+              <span className="item-price-name">Rs.{item.price}</span>
+              <span className="item-price-amt">
+                = Rs.{item.price * item.qty}
+              </span>
+            </div>
+          ))}
+          <span className="amt-summ">Total Amount = Rs. {totalAmount}</span>
+        </div>
       </div>
     </div>
   );
