@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import SearchCustomerBar from "./SearchCustomerBar";
 import SearchItemBar from "./SearchItemBar";
+import Modal from "../modal/modal";
 
 const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
   const [issuedDate, setIssuedDate] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
   const [LineItems, setLineItems] = useState([{ name: "", qty: 1, price: 0 }]);
-  const [PaidStatus, setPaidStatus] = useState("paid");
-  const [customerName, setCustomerName] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [referenceID, setReferenceID] = useState("");
+  const [amountDue, setAmountDue] = useState(0);
 
   const addNewItem = () => {
     setLineItems((prevItems) => [...prevItems, { name: "", qty: 1, price: 0 }]);
@@ -23,16 +26,45 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
   };
 
   const saveInvoice = () => {
-    const status = dueDate ? "unpaid" : "paid";
+    if (
+      !selectedCustomer ||
+      !issuedDate ||
+      !invoiceNumber ||
+      totalAmount <= 0
+    ) {
+      alert(
+        "Please fill out all required fields and ensure total amount is greater than 0!"
+      );
+      return;
+    }
+
+    let status = dueDate ? "unpaid" : "paid";
+    let amountDueValue = 0;
+
+    if (status === "unpaid") {
+      const unpaidAmount = parseFloat(prompt("Enter the unpaid amount:", "0"));
+      if (
+        isNaN(unpaidAmount) ||
+        unpaidAmount <= 0 ||
+        unpaidAmount > totalAmount
+      ) {
+        alert("Invalid unpaid amount entered.");
+        return;
+      }
+      amountDueValue = unpaidAmount;
+    }
+
     const newInvoice = {
-      Customer: customerName,
+      Customer: selectedCustomer,
       InvNumber: invoiceNumber,
       Date: issuedDate,
       DueDate: dueDate,
       PaidStatus: status,
       Amount: totalAmount,
+      AmountDue: amountDueValue,
     };
     onAdd(newInvoice);
+    setShowModal(true);
   };
 
   const handleItemUpdate = (index, updatedItem) => {
@@ -62,7 +94,11 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
       <div className="left-right-box">
         <div className="left-new-invoice-page">
           <div className="left-new-invoice-page-header">Bill to</div>
-          <SearchCustomerBar customers={customers} />
+          <SearchCustomerBar
+            customers={customers}
+            selectedCustomer={selectedCustomer}
+            setSelectedCustomer={setSelectedCustomer}
+          />
         </div>
         <div className="right-new-invoice-page">
           <div className="date-inputs-container">
@@ -101,6 +137,8 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
               <input
                 type="text"
                 className="text-input-box"
+                value={referenceID}
+                onChange={(e) => setReferenceID(e.target.value)}
                 placeholder="Enter Reference ID"
               />
             </div>
@@ -151,6 +189,7 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
           <span className="amt-summ">Total Amount = Rs. {totalAmount}</span>
         </div>
       </div>
+      {showModal && <Modal closeModal={() => setShowModal(false)} />}
     </div>
   );
 };

@@ -2,9 +2,11 @@ import React from "react";
 import { useState } from "react";
 import "../App.css";
 
-const SearchCustomerBar = ({ customers }) => {
-  const [selectedCustomer, setSelectedCustomer] = useState("");
-
+const SearchCustomerBar = ({
+  customers,
+  selectedCustomer,
+  setSelectedCustomer,
+}) => {
   const handleChange = (event) => {
     setSelectedCustomer(event.target.value);
   };

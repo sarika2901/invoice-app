@@ -94,10 +94,10 @@ const InvoicesList = ({ invoices }) => {
             <div className="table-item">{invoice.InvNumber}</div>
             <div className="table-item">{invoice.PaidStatus}</div>
             <div className="table-item">
-              ${invoice.Amount ? invoice.Amount.toFixed(2) : "N/A"}
+              Rs. {invoice.Amount ? invoice.Amount.toFixed(2) : "N/A"}
             </div>
             <div className="table-item">
-              ${invoice.AmountDue ? invoice.AmountDue.toFixed(2) : "N/A"}
+              Rs. {invoice.AmountDue ? invoice.AmountDue.toFixed(2) : "N/A"}
             </div>
           </div>
         ))
