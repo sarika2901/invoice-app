@@ -9,11 +9,15 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
   const [dueDate, setDueDate] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
   const [LineItems, setLineItems] = useState([{ name: "", qty: 1, price: 0 }]);
-  const [invoiceNumber, setInvoiceNumber] = useState("");
+  const [invoiceNumber, setInvoiceNumber] = useState("INV0001");
   const [selectedCustomer, setSelectedCustomer] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [referenceID, setReferenceID] = useState("");
-  const [amountDue, setAmountDue] = useState(0);
+
+  const getNextInvoiceNumber = (currentNumber) => {
+    const num = parseInt(currentNumber.replace("INV", "")) + 1;
+    return `INV${String(num).padStart(4, "0")}`;
+  };
 
   const addNewItem = () => {
     setLineItems((prevItems) => [...prevItems, { name: "", qty: 1, price: 0 }]);
@@ -25,16 +29,31 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
     );
   };
 
+  const resetFields = () => {
+    setIssuedDate("");
+    setDueDate("");
+    setTotalAmount(0);
+    setLineItems([{ name: "", qty: 1, price: 0 }]);
+    setSelectedCustomer("");
+    setReferenceID("");
+  };
+
   const saveInvoice = () => {
     if (
       !selectedCustomer ||
       !issuedDate ||
       !invoiceNumber ||
-      totalAmount <= 0
+      totalAmount === 0 ||
+      isNaN(totalAmount)
     ) {
       alert(
         "Please fill out all required fields and ensure total amount is greater than 0!"
       );
+      return;
+    }
+
+    if (LineItems.length === 1 && LineItems[0].name === "") {
+      alert("Please add at least one item to the invoice.");
       return;
     }
 
@@ -65,6 +84,11 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
     };
     onAdd(newInvoice);
     setShowModal(true);
+    const num = parseInt(invoiceNumber.replace("INV", "")) + 1;
+    const newInvoiceNumber = getNextInvoiceNumber(invoiceNumber);
+    setInvoiceNumber(newInvoiceNumber);
+
+    resetFields();
   };
 
   const handleItemUpdate = (index, updatedItem) => {
@@ -128,7 +152,7 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
                 type="text"
                 className="text-input-box"
                 value={invoiceNumber}
-                onChange={(e) => setInvoiceNumber(e.target.value)}
+                readOnly
                 placeholder="Enter Invoice Number"
               />
             </div>
