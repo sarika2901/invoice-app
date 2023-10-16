@@ -50,14 +50,15 @@ const ItemsList = ({ items }) => {
   useEffect(() => {
     setHeaders(["NAME", "DESCRIPTION", "PRICE", "ADDED ON"]);
     setRows(
-      items.map((x) => (
-        <div key={x.name} className="table-items-container">
-          <div className="table-item">{x.name}</div>
-          <div className="table-item">{x.description}</div>
-          <div className="table-item">Rs. {x.price}</div>
-          <div className="table-item">{x.addedOn}</div>
-        </div>
-      ))
+      items &&
+        items.map((x) => (
+          <div key={x.name} className="table-items-container">
+            <div className="table-item">{x.name}</div>
+            <div className="table-item">{x.description}</div>
+            <div className="table-item">Rs. {x.price}</div>
+            <div className="table-item">{x.addedOn}</div>
+          </div>
+        ))
     );
   }, [items, setHeaders, setRows]);
   return (
@@ -71,75 +72,46 @@ const ItemsList = ({ items }) => {
   );
 };
 
-let invoices = [
-  {
-    Date: "12/17/2019",
-    Customer: "Sarika",
-    InvNumber: "INV-00010",
-    PaidStatus: "Issued",
-    Amount: 3000,
-    AmountDue: 1000,
-  },
-  {
-    Date: "12/19/2019",
-    Customer: "Harry",
-    InvNumber: "INV-00011",
-    PaidStatus: "Paid",
-    Amount: 5000,
-    AmountDue: 0,
-  },
-  {
-    Date: "01/10/2020",
-    Customer: "Ron",
-    InvNumber: "INV-00012",
-    PaidStatus: "Pending",
-    Amount: 2500,
-    AmountDue: 2500,
-  },
-  {
-    Date: "01/15/2020",
-    Customer: "Hermione",
-    InvNumber: "INV-00013",
-    PaidStatus: "Issued",
-    Amount: 4000,
-    AmountDue: 1500,
-  },
-  {
-    Date: "02/05/2020",
-    Customer: "Draco",
-    InvNumber: "INV-00014",
-    PaidStatus: "Paid",
-    Amount: 6000,
-    AmountDue: 0,
-  },
-];
+const InvoicesList = ({ invoices }) => {
+  const { setHeaders, setRows } = useTable();
 
-const InvoicesList = () => {
+  useEffect(() => {
+    setHeaders([
+      "DATE",
+      "CUSTOMERS",
+      "NUMBER",
+      "PAID STATUS",
+      "AMOUNT",
+      "AMOUNT DUE",
+    ]);
+
+    setRows(
+      invoices &&
+        invoices.map((invoice, index) => (
+          <div key={index} className="table-items-container">
+            <div className="table-item">{invoice.Date}</div>
+            <div className="table-item">{invoice.Customer}</div>
+            <div className="table-item">{invoice.InvNumber}</div>
+            <div className="table-item">{invoice.PaidStatus}</div>
+            <div className="table-item">
+              ${invoice.Amount ? invoice.Amount.toFixed(2) : "N/A"}
+            </div>
+            <div className="table-item">
+              ${invoice.AmountDue ? invoice.AmountDue.toFixed(2) : "N/A"}
+            </div>
+          </div>
+        ))
+    );
+  }, [invoices, setHeaders, setRows]);
+
   return (
-    <div className="invoices-list-container">
+    <>
       <div className="header-container">
         <h3>Invoices</h3>
         <AddInvoiceButton />
       </div>
-      <div className="table-head-container">
-        <div className="table-head">DATE</div>
-        <div className="table-head">CUSTOMERS</div>
-        <div className="table-head">NUMBER</div>
-        <div className="table-head">PAID STATUS</div>
-        <div className="table-head">AMOUNT</div>
-        <div className="table-head">AMOUNT DUE</div>
-      </div>
-      {invoices.map((invoice, index) => (
-        <div key={index} className="table-items-container">
-          <div className="table-item">{invoice.Date}</div>
-          <div className="table-item">{invoice.Customer}</div>
-          <div className="table-item">{invoice.InvNumber}</div>
-          <div className="table-item">{invoice.PaidStatus}</div>
-          <div className="table-item">${invoice.Amount.toFixed(2)}</div>
-          <div className="table-item">${invoice.AmountDue.toFixed(2)}</div>
-        </div>
-      ))}
-    </div>
+      <Table />
+    </>
   );
 };
 
@@ -152,6 +124,11 @@ const App = () => {
   const [items, setItems] = useState([]);
   const addItem = (newItem) => {
     setItems((prevItems) => [...prevItems, newItem]);
+  };
+
+  const [invoices, setInvoices] = useState([]);
+  const addInvoice = (newInvoice) => {
+    setInvoices((prevInvoices) => [...prevInvoices, newInvoice]);
   };
 
   return (
@@ -213,10 +190,19 @@ const App = () => {
               <Route path="/items" element={<ItemsList items={items} />} />
               <Route
                 path="/new-invoice"
-                element={<NewInvoicePage customers={customers} items={items} />}
+                element={
+                  <NewInvoicePage
+                    customers={customers}
+                    items={items}
+                    onAdd={addInvoice}
+                  />
+                }
               />
 
-              <Route path="/invoices" element={<InvoicesList />} />
+              <Route
+                path="/invoices"
+                element={<InvoicesList invoices={invoices} />}
+              />
             </Routes>
           </div>
         </div>

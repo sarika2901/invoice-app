@@ -7,11 +7,12 @@ const Table = () => {
   return (
     <div>
       <div className="table-head-container">
-        {headers.map((header, idx) => (
-          <div key={idx} className="table-head">
-            {header}
-          </div>
-        ))}
+        {headers &&
+          headers.map((header, idx) => (
+            <div key={idx} className="table-head">
+              {header}
+            </div>
+          ))}
       </div>
       {rows}
     </div>

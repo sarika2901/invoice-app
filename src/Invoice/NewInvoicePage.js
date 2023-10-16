@@ -3,11 +3,14 @@ import "../App.css";
 import SearchCustomerBar from "./SearchCustomerBar";
 import SearchItemBar from "./SearchItemBar";
 
-const NewInvoicePage = ({ customers, items }) => {
+const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
   const [issuedDate, setIssuedDate] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
   const [LineItems, setLineItems] = useState([{ name: "", qty: 1, price: 0 }]);
+  const [PaidStatus, setPaidStatus] = useState("paid");
+  const [customerName, setCustomerName] = useState("");
+  const [invoiceNumber, setInvoiceNumber] = useState("");
 
   const addNewItem = () => {
     setLineItems((prevItems) => [...prevItems, { name: "", qty: 1, price: 0 }]);
@@ -17,6 +20,19 @@ const NewInvoicePage = ({ customers, items }) => {
     setLineItems((prevItems) =>
       prevItems.filter((_, index) => index !== indexToRemove)
     );
+  };
+
+  const saveInvoice = () => {
+    const status = dueDate ? "unpaid" : "paid";
+    const newInvoice = {
+      Customer: customerName,
+      InvNumber: invoiceNumber,
+      Date: issuedDate,
+      DueDate: dueDate,
+      PaidStatus: status,
+      Amount: totalAmount,
+    };
+    onAdd(newInvoice);
   };
 
   const handleItemUpdate = (index, updatedItem) => {
@@ -39,7 +55,7 @@ const NewInvoicePage = ({ customers, items }) => {
     <div className="invoice-page-container">
       <div className="header-container-invoice">
         <h3>New Invoice</h3>
-        <button className="formChar-submit" type="submit">
+        <button className="formChar-submit" onClick={saveInvoice}>
           Save Invoice
         </button>
       </div>
@@ -75,6 +91,8 @@ const NewInvoicePage = ({ customers, items }) => {
               <input
                 type="text"
                 className="text-input-box"
+                value={invoiceNumber}
+                onChange={(e) => setInvoiceNumber(e.target.value)}
                 placeholder="Enter Invoice Number"
               />
             </div>
@@ -91,16 +109,17 @@ const NewInvoicePage = ({ customers, items }) => {
       </div>
       <div className="Items-header">Items</div>
       <div className="item-list-container">
-        {LineItems.map((item, index) => (
-          <div key={index} className="item-row">
-            <SearchItemBar
-              items={items}
-              index={index}
-              onUpdate={(updatedItem) => handleItemUpdate(index, updatedItem)}
-              onDelete={() => handleDelete(index)}
-            />
-          </div>
-        ))}
+        {LineItems &&
+          LineItems.map((item, index) => (
+            <div key={index} className="item-row">
+              <SearchItemBar
+                items={items}
+                index={index}
+                onUpdate={(updatedItem) => handleItemUpdate(index, updatedItem)}
+                onDelete={() => handleDelete(index)}
+              />
+            </div>
+          ))}
         <button className="formChar-submit" onClick={addNewItem}>
           Add an Item
         </button>
@@ -118,16 +137,17 @@ const NewInvoicePage = ({ customers, items }) => {
           </div>
         </div>
         <div className="summary">
-          {LineItems.map((item, index) => (
-            <div className="summary-items" key={index}>
-              <span className="item-name">{item.name}</span>
-              <span className="qty-name">x{item.qty}</span>
-              <span className="item-price-name">Rs.{item.price}</span>
-              <span className="item-price-amt">
-                = Rs.{item.price * item.qty}
-              </span>
-            </div>
-          ))}
+          {LineItems &&
+            LineItems.map((item, index) => (
+              <div className="summary-items" key={index}>
+                <span className="item-name">{item.name}</span>
+                <span className="qty-name">x{item.qty}</span>
+                <span className="item-price-name">Rs.{item.price}</span>
+                <span className="item-price-amt">
+                  = Rs.{item.price * item.qty}
+                </span>
+              </div>
+            ))}
           <span className="amt-summ">Total Amount = Rs. {totalAmount}</span>
         </div>
       </div>
