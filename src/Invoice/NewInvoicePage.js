@@ -19,6 +19,15 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
     return `INV${String(num).padStart(4, "0")}`;
   };
 
+  useEffect(() => {
+    const lastInvoiceNumber = localStorage.getItem("lastInvoiceNumber");
+    if (lastInvoiceNumber) {
+      setInvoiceNumber(getNextInvoiceNumber(lastInvoiceNumber));
+    } else {
+      setInvoiceNumber("INV0001");
+    }
+  }, []);
+
   const addNewItem = () => {
     setLineItems((prevItems) => [...prevItems, { name: "", qty: 1, price: 0 }]);
   };
@@ -89,6 +98,8 @@ const NewInvoicePage = ({ customers = [], items = [], onAdd }) => {
     setInvoiceNumber(newInvoiceNumber);
 
     resetFields();
+
+    localStorage.setItem("lastInvoiceNumber", newInvoiceNumber);
   };
 
   const handleItemUpdate = (index, updatedItem) => {
